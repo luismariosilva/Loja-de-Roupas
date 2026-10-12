@@ -25,12 +25,17 @@
     <button><a href="{% url 'adicionar_produto' %}">Adicionar Produto</a></button>
     <hr>
 
-    <h2>Apagar produto</h2>
     {% for produto in produtos %}
-        <p>
-            Produto: {{produto.nome}}
-            <button><a href="{% url 'apagar_produto' produto.id %}">Apagar</a></button>
-        </p>
+    <p>Produto: {{ produto.nome }}</p>
+
+    <p><button><a href="{% url 'editar_produto' produto.id %}">Editar Produto</a></button></p>
+    
+    <form method="post" action="{% url 'apagar_produto' produto.id %}">
+        {% csrf_token %}
+        <button type="submit">Apagar Produto</button>
+    </form>
+
+    <hr>
     {% endfor %}
 
 </body>

@@ -4,7 +4,6 @@ from loja.forms import ProdutoForm
 
 
 
-
 def produtos(request):
     produto = Produto.objects.all()
     context = {'produtos': produto}
