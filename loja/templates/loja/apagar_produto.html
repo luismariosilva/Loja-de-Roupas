@@ -4,12 +4,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Apagar Produto</title>
-    </head>
-    <body>
-        <h1>Apagar Produto</h1>
-        <p>Tem certeza que deseja eliminar o produto {{produto.nome}}?</p>
-        <form method="post">
-            {% csrf_token %}
-            <input type="submit" value="Sim">
-            <button><a href="{% url 'produtos' %}">Não</a></button>
-        </form>
+</head>
+<body>
+    <h1>Apagar Produto</h1>
+    <p>Tem certeza que deseja eliminar o produto {{produto.nome}}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Apagar Produto">
+        <a href="{% url 'produtos' %}">Não Apagar</a>
+    </form>
+</body>
+</html>
