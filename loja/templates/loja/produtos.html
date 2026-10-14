@@ -1,42 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Produtos</title>
   </head>
   <body>
     <h1>Produtos</h1>
-    {% for produto in produtos %} Produto: {{produto.nome}}
-    <ul>
-      <li>Preco: R${{produto.preco}}</li>
-      <li>Marca: {{produto.marca}}</li>
-      <li>Pais de Origem: {{produto.marca.pais_origem}}</li>
-      <li>
-        Categoria: {% for categoria in produto.categoria.all %}{{ categoria.nome
-        }}{% if not forloop.last %}, {% endif %}{% empty %}Nenhuma categoria
-        associada{% endfor %}
-      </li>
-      <li>Em Stock: {{produto.em_stock}}</li>
-    </ul>
+    {% for produto in produtos %}
+      <p>Produto: {{ produto.nome }}</p>
+      <ul>
+        <li>Preco: R${{ produto.preco }}</li>
+        <li>Marca: {{ produto.marca }}</li>
+        <li>Pais de Origem: {{ produto.marca.pais_origem }}</li>
+        <li>
+          Categoria:
+          {% for categoria in produto.categoria.all %}
+            {{ categoria.nome }}{% if not forloop.last %}, {% endif %}
+          {% empty %}
+            Nenhuma categoria associada
+          {% endfor %}
+        </li>
+        <li>Em Stock: {{ produto.em_stock }}</li>
+      </ul>
 
-    <p>
-      <button>
-        <a href="{% url 'editar_produto' produto.id %}">Editar Produto</a>
-      </button>
-    </p>
+      <p>
+        <button>
+          <a href="{% url 'editar_produto' produto.id %}">Editar Produto</a>
+        </button>
+      </p>
 
-    <form method="post" action="{% url 'apagar_produto' produto.id %}">
-      {% csrf_token %}
-      <button type="submit">Apagar Produto</button>
-    </form>
-    <hr />
+      <form method="post" action="{% url 'apagar_produto' produto.id %}">
+        {% csrf_token %}
+        <button type="submit">Apagar Produto</button>
+      </form>
+      <hr>
     {% endfor %}
 
     <h2>Adicionar Produto</h2>
     <button>
       <a href="{% url 'adicionar_produto' %}">Adicionar Produto</a>
     </button>
-    <hr />
+    <hr>
   </body>
 </html>
