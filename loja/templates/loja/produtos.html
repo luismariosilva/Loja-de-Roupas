@@ -25,9 +25,7 @@
       </ul>
 
       <p>
-        <button>
-          <a href="{% url 'editar_produto' produto.id %}">Editar Produto</a>
-        </button>
+        <a href="{% url 'editar_produto' produto.id %}">Editar Produto</a>
       </p>
 
       <form method="post" action="{% url 'apagar_produto' produto.id %}">
