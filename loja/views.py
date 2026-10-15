@@ -18,7 +18,7 @@ def adicionar_produto(request):
             return redirect('produtos')
     else:
         form = ProdutoForm()
-    return render(request, 'loja/adicionar_produto.html', {'form': form})
+    return render(request, 'loja/adicionar_produto.html', {'form': form, 'editando': False})
 
 
 def editar_produto(request, produto_id):
@@ -30,7 +30,7 @@ def editar_produto(request, produto_id):
             return redirect('produtos')
     else:
         form = ProdutoForm(instance=produto)
-    return render(request, 'loja/adicionar_produto.html', {'form': form})
+    return render(request, 'loja/adicionar_produto.html', {'form': form, 'editando': True})
 
 
 def apagar_produto(request, produto_id):

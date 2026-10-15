@@ -1,16 +1,86 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar Produto</title>
-</head>
-<body>
-    <h1>Adicionar Produto/ Editar Produto</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Adicionar">
-    </form>
-</body> 
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#17251f">
+        <title>{% if editando %}Editar produto{% else %}Novo produto{% endif %} | Linha Loja</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'loja/produtos.css' %}">
+        <link rel="stylesheet" href="{% static 'loja/forms.css' %}">
+    </head>
+    <body>
+        <div class="app-shell">
+            <aside class="sidebar">
+                <a class="brand" href="{% url 'produtos' %}" aria-label="Linha Loja, página de produtos">
+                    <span class="brand-mark">L</span>
+                    <span class="brand-name">linha<span>loja</span></span>
+                </a>
+
+                <div class="sidebar-section-label">GESTÃO</div>
+                <nav class="sidebar-nav" aria-label="Navegação principal">
+                    <a class="nav-link nav-link-active" href="{% url 'produtos' %}" aria-current="page">
+                        <span class="nav-indicator"></span>
+                        <span>Produtos</span>
+                    </a>
+                    <a class="nav-link" href="{% url 'admin:index' %}">
+                        <span class="nav-indicator"></span>
+                        <span>Administração</span>
+                        <span class="nav-arrow" aria-hidden="true">↗</span>
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <span class="footer-dot"></span>
+                    <span>PAINEL DA LOJA</span>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <header class="topbar">
+                    <p class="breadcrumb">CATÁLOGO <span>/</span> {% if editando %}EDIÇÃO{% else %}NOVO PRODUTO{% endif %}</p>
+                    <a class="admin-link" href="{% url 'produtos' %}">Voltar ao catálogo</a>
+                </header>
+
+                <section class="page-heading form-page-heading" aria-labelledby="page-title">
+                    <div>
+                        <p class="eyebrow">{% if editando %}ATUALIZAÇÃO DO CATÁLOGO{% else %}NOVO ITEM NO CATÁLOGO{% endif %}</p>
+                        <h1 id="page-title">{% if editando %}Editar produto{% else %}Novo produto{% endif %}<span>.</span></h1>
+                        <p class="page-description">{% if editando %}Atualize as informações deste produto.{% else %}Preencha os dados para adicionar um produto à loja.{% endif %}</p>
+                    </div>
+                </section>
+
+                <section class="form-panel" aria-label="Dados do produto">
+                    <div class="form-panel-heading">
+                        <span class="form-step">01</span>
+                        <div>
+                            <h2>Informações do produto</h2>
+                            <p>Os campos do produto aparecem abaixo.</p>
+                        </div>
+                    </div>
+
+                    <form class="product-form" method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        {{ form.as_p }}
+
+                        <div class="form-actions">
+                            <a class="button button-edit" href="{% url 'produtos' %}">Cancelar</a>
+                            <button class="button button-primary" type="submit">
+                                {% if editando %}Salvar alterações{% else %}Cadastrar produto{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <footer class="page-footer">
+                    <span>LINHA LOJA</span>
+                    <span>{% if editando %}EDIÇÃO DE PRODUTO{% else %}CADASTRO DE PRODUTO{% endif %}</span>
+                </footer>
+            </main>
+        </div>
+    </body>
 </html>

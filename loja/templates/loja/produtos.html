@@ -1,44 +1,128 @@
+{% load static i18n l10n %}
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Produtos</title>
+    <meta name="theme-color" content="#17251f">
+    <title>Produtos | Linha Loja</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'loja/produtos.css' %}">
   </head>
   <body>
-    <h1>Produtos</h1>
-    {% for produto in produtos %}
-      <p>Produto: {{ produto.nome }}</p>
-      <ul>
-        <li>Preco: R${{ produto.preco }}</li>
-        <li>Marca: {{ produto.marca }}</li>
-        <li>Pais de Origem: {{ produto.marca.pais_origem }}</li>
-        <li>
-          Categoria:
-          {% for categoria in produto.categoria.all %}
-            {{ categoria.nome }}{% if not forloop.last %}, {% endif %}
-          {% empty %}
-            Nenhuma categoria associada
-          {% endfor %}
-        </li>
-        <li>Em Stock: {{ produto.em_stock }}</li>
-      </ul>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="{% url 'produtos' %}" aria-label="Linha Loja, página de produtos">
+          <span class="brand-mark">L</span>
+          <span class="brand-name">linha<span>loja</span></span>
+        </a>
 
-      <p>
-        <a href="{% url 'editar_produto' produto.id %}">Editar Produto</a>
-      </p>
+        <div class="sidebar-section-label">GESTÃO</div>
+        <nav class="sidebar-nav" aria-label="Navegação principal">
+          <a class="nav-link nav-link-active" href="{% url 'produtos' %}" aria-current="page">
+            <span class="nav-indicator"></span>
+            <span>Produtos</span>
+            <span class="nav-count">{{ produtos|length }}</span>
+          </a>
+          <a class="nav-link" href="{% url 'admin:index' %}">
+            <span class="nav-indicator"></span>
+            <span>Administração</span>
+            <span class="nav-arrow" aria-hidden="true">↗</span>
+          </a>
+        </nav>
 
-      <form method="post" action="{% url 'apagar_produto' produto.id %}">
-        {% csrf_token %}
-        <button type="submit">Apagar Produto</button>
-      </form>
-      <hr>
-    {% endfor %}
+        <div class="sidebar-footer">
+          <span class="footer-dot"></span>
+          <span>PAINEL DA LOJA</span>
+        </div>
+      </aside>
 
-    <h2>Adicionar Produto</h2>
-    <button>
-      <a href="{% url 'adicionar_produto' %}">Adicionar Produto</a>
-    </button>
-    <hr>
+      <main class="main-content">
+        <header class="topbar">
+          <p class="breadcrumb">CATÁLOGO <span>/</span> PRODUTOS</p>
+          <a class="admin-link" href="{% url 'admin:index' %}">Acessar admin <span aria-hidden="true">↗</span></a>
+        </header>
+
+        <section class="page-heading" aria-labelledby="page-title">
+          <div>
+            <p class="eyebrow">INVENTÁRIO DA LOJA</p>
+            <h1 id="page-title">Seus produtos<span>.</span></h1>
+            <p class="page-description">Organize seu catálogo, estoque e marcas em um só lugar.</p>
+          </div>
+          <a class="button button-primary" href="{% url 'adicionar_produto' %}">
+            <span class="button-plus" aria-hidden="true">+</span>
+            Novo produto
+          </a>
+        </section>
+
+        <section class="catalog-toolbar" aria-label="Resumo do catálogo">
+          <div class="catalog-count">
+            <span class="count-number">{{ produtos|length }}</span>
+            <span class="count-label">itens no catálogo</span>
+          </div>
+          <p class="catalog-note"><span class="note-mark" aria-hidden="true">✳</span> Visão geral do seu inventário</p>
+        </section>
+
+        {% if produtos %}
+          <section class="product-grid" aria-label="Produtos cadastrados">
+            {% for produto in produtos %}
+              <article class="product-card">
+                <div class="card-topline">
+                  <span class="product-reference">PRODUTO {{ produto.id|stringformat:"03d" }}</span>
+                  {% if produto.em_stock %}
+                    <span class="stock-status stock-in"><span></span>Em estoque</span>
+                  {% else %}
+                    <span class="stock-status stock-out"><span></span>Indisponível</span>
+                  {% endif %}
+                </div>
+
+                <div class="product-info">
+                  <p class="product-brand">{{ produto.marca }}</p>
+                  <h2>{{ produto.nome }}</h2>
+                  <p class="product-origin">{{ produto.marca.pais_origem }}</p>
+                </div>
+
+                <div class="category-list" aria-label="Categorias">
+                  {% for categoria in produto.categoria.all %}
+                    <span class="category-chip">{{ categoria.nome }}</span>
+                  {% empty %}
+                    <span class="category-empty">Sem categoria</span>
+                  {% endfor %}
+                </div>
+
+                <div class="card-footer">
+                  <p class="product-price">
+                    <span>R$</span>
+                    {% language 'pt-br' %}{{ produto.preco|localize }}{% endlanguage %}
+                  </p>
+                  <div class="card-actions">
+                    <a class="button button-edit" href="{% url 'editar_produto' produto.id %}">Editar</a>
+                    <a class="button button-delete" href="{% url 'apagar_produto' produto.id %}">Apagar</a>
+                  </div>
+                </div>
+              </article>
+            {% endfor %}
+          </section>
+        {% else %}
+          <section class="empty-state">
+            <span class="empty-mark" aria-hidden="true">L</span>
+            <p class="eyebrow">SEU CATÁLOGO COMEÇA AQUI</p>
+            <h2>Nenhum produto ainda</h2>
+            <p>Adicione o primeiro produto para começar a organizar sua loja.</p>
+            <a class="button button-primary" href="{% url 'adicionar_produto' %}">
+              <span class="button-plus" aria-hidden="true">+</span>
+              Cadastrar produto
+            </a>
+          </section>
+        {% endif %}
+
+        <footer class="page-footer">
+          <span>LINHA LOJA</span>
+          <span>CATÁLOGO DE PRODUTOS</span>
+        </footer>
+      </main>
+    </div>
   </body>
 </html>

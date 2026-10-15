@@ -1,0 +1,244 @@
+.form-page-heading {
+  padding-bottom: 27px;
+}
+
+.form-panel,
+.confirmation-panel {
+  width: min(100%, 760px);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--white);
+  box-shadow: 0 8px 26px rgba(25, 39, 32, 0.055);
+  animation: arrive 420ms ease-out both;
+}
+
+.form-panel {
+  padding: clamp(20px, 4vw, 34px);
+}
+
+.form-panel-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-bottom: 26px;
+  padding-bottom: 19px;
+  border-bottom: 1px solid var(--line);
+}
+
+.form-step {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 4px;
+  color: var(--leaf);
+  background: var(--leaf-soft);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.form-panel-heading h2,
+.confirmation-copy h2 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.form-panel-heading p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.product-form p {
+  display: grid;
+  gap: 7px;
+  margin: 0 0 19px;
+  color: #39463e;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.product-form label {
+  line-height: 1.4;
+}
+
+.product-form input:not([type="checkbox"]),
+.product-form select,
+.product-form textarea {
+  width: 100%;
+  min-height: 43px;
+  padding: 10px 12px;
+  border: 1px solid #dce2dc;
+  border-radius: 4px;
+  color: var(--ink);
+  background: #fcfdfb;
+  font: 400 13px var(--sans);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.product-form select[multiple] {
+  min-height: 112px;
+  padding: 7px;
+}
+
+.product-form input:not([type="checkbox"]):focus,
+.product-form select:focus,
+.product-form textarea:focus {
+  border-color: var(--leaf);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(46, 114, 88, 0.12);
+}
+
+.product-form input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--leaf);
+}
+
+.product-form .helptext {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.product-form .errorlist,
+.product-form ul.errorlist {
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: 4px;
+  color: #a23e30;
+  background: var(--coral-soft);
+  font-size: 11px;
+  font-weight: 500;
+  list-style: none;
+}
+
+.product-form > .errorlist {
+  margin-bottom: 16px;
+}
+
+.form-actions,
+.confirmation-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 25px;
+  padding-top: 19px;
+  border-top: 1px solid var(--line);
+}
+
+.form-actions .button,
+.confirmation-actions .button {
+  min-height: 42px;
+  padding: 0 15px;
+}
+
+.eyebrow-danger {
+  color: #b3543d;
+}
+
+.confirmation-panel {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 17px;
+  padding: clamp(21px, 4vw, 34px);
+  border-top: 3px solid #d75f43;
+}
+
+.warning-symbol {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 50%;
+  color: #a74632;
+  background: var(--coral-soft);
+  font-family: var(--serif);
+  font-size: 23px;
+}
+
+.confirmation-copy {
+  min-width: 0;
+}
+
+.confirmation-label {
+  margin: 1px 0 8px;
+  color: #b3543d;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.confirmation-copy h2 {
+  font-size: 23px;
+}
+
+.confirmation-product {
+  overflow-wrap: anywhere;
+  margin: 15px 0 0;
+  color: var(--forest);
+  font-family: var(--serif);
+  font-size: 19px;
+}
+
+.confirmation-note {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.confirmation-actions {
+  grid-column: 1 / -1;
+}
+
+.button-danger-confirm {
+  color: #ffffff;
+  background: #a74632;
+}
+
+.button-danger-confirm:hover {
+  background: #883a2b;
+}
+
+@media (max-width: 540px) {
+  .form-page-heading {
+    padding-top: 30px;
+  }
+
+  .form-panel {
+    padding: 19px 16px;
+  }
+
+  .form-actions,
+  .confirmation-actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .form-actions .button,
+  .confirmation-actions .button {
+    width: 100%;
+  }
+
+  .confirmation-panel {
+    grid-template-columns: 35px minmax(0, 1fr);
+    gap: 12px;
+    padding: 21px 16px;
+  }
+
+  .warning-symbol {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+  }
+
+  .confirmation-copy h2 {
+    font-size: 20px;
+  }
+}

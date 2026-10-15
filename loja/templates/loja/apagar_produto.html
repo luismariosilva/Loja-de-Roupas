@@ -1,17 +1,79 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Apagar Produto</title>
-</head>
-<body>
-    <h1>Apagar Produto</h1>
-    <p>Tem certeza que deseja eliminar o produto {{produto.nome}}?</p>
-    <form method="post">
-        {% csrf_token %}
-        <input type="submit" value="Apagar Produto">
-        <a href="{% url 'produtos' %}">Não Apagar</a>
-    </form>
-</body>
+        <meta name="theme-color" content="#17251f">
+        <title>Confirmar exclusão | Linha Loja</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'loja/produtos.css' %}">
+        <link rel="stylesheet" href="{% static 'loja/forms.css' %}">
+    </head>
+    <body>
+        <div class="app-shell">
+            <aside class="sidebar">
+                <a class="brand" href="{% url 'produtos' %}" aria-label="Linha Loja, página de produtos">
+                    <span class="brand-mark">L</span>
+                    <span class="brand-name">linha<span>loja</span></span>
+                </a>
+
+                <div class="sidebar-section-label">GESTÃO</div>
+                <nav class="sidebar-nav" aria-label="Navegação principal">
+                    <a class="nav-link nav-link-active" href="{% url 'produtos' %}" aria-current="page">
+                        <span class="nav-indicator"></span>
+                        <span>Produtos</span>
+                    </a>
+                    <a class="nav-link" href="{% url 'admin:index' %}">
+                        <span class="nav-indicator"></span>
+                        <span>Administração</span>
+                        <span class="nav-arrow" aria-hidden="true">↗</span>
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <span class="footer-dot"></span>
+                    <span>PAINEL DA LOJA</span>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <header class="topbar">
+                    <p class="breadcrumb">CATÁLOGO <span>/</span> EXCLUSÃO</p>
+                    <a class="admin-link" href="{% url 'produtos' %}">Voltar ao catálogo</a>
+                </header>
+
+                <section class="page-heading form-page-heading" aria-labelledby="page-title">
+                    <div>
+                        <p class="eyebrow eyebrow-danger">AÇÃO IRREVERSÍVEL</p>
+                        <h1 id="page-title">Remover produto<span>.</span></h1>
+                        <p class="page-description">Revise o item antes de confirmar a exclusão.</p>
+                    </div>
+                </section>
+
+                <section class="confirmation-panel" aria-label="Confirmar exclusão do produto">
+                    <div class="warning-symbol" aria-hidden="true">!</div>
+                    <div class="confirmation-copy">
+                        <p class="confirmation-label">CONFIRMAÇÃO NECESSÁRIA</p>
+                        <h2>Deseja apagar este produto?</h2>
+                        <p class="confirmation-product">{{ produto.nome }}</p>
+                        <p class="confirmation-note">Esta ação removerá o produto do catálogo e não poderá ser desfeita.</p>
+                    </div>
+
+                    <form class="confirmation-actions" method="post">
+                        {% csrf_token %}
+                        <a class="button button-edit" href="{% url 'produtos' %}">Manter produto</a>
+                        <button class="button button-danger-confirm" type="submit">Sim, apagar produto</button>
+                    </form>
+                </section>
+
+                <footer class="page-footer">
+                    <span>LINHA LOJA</span>
+                    <span>CONFIRMAÇÃO DE EXCLUSÃO</span>
+                </footer>
+            </main>
+        </div>
+    </body>
 </html>
